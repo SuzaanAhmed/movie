@@ -1,11 +1,19 @@
 "use client";
 import { useState } from "react";
-import { fetchMovie,fetchMoviesByGenre } from "./apis/page";
+import { fetchMovie,fetchMoviesByGenre,fetchRandomMovies } from "./apis/page";
 import Navbar from "../../navbar/page";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
+  
   const [loading, setLoading] = useState(false);
+
+  const randomiseSearch=async()=>{
+    setLoading(true);
+    const rando=await fetchRandomMovies();
+    setMovies(rando)
+    setLoading(false);
+  }
 
   const handleMovieSearch = async (query) => {
     setLoading(true);
@@ -24,7 +32,8 @@ export default function Home() {
 
   return (
     <div>
-      <Navbar onGenreSelect={handleGenreSelect} onSearch={handleMovieSearch}/>  
+      
+      <Navbar onGenreSelect={handleGenreSelect} onSearch={handleMovieSearch} onRandomise={randomiseSearch}/>  
       
       {loading ? (
         <p className="mt-4 text-center">Loading movies...</p>

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function Navbar({onGenreSelect,onSearch}) {  
+export default function Navbar({onGenreSelect,onSearch,onRandomise}) {  
   const [genre,setGenre]=useState("")  
   const [query, setQuery] = useState("");
   const genres = ["Drama", "Action", "Romance", "Thriller", "Comedy", "Horror"];
@@ -12,12 +12,9 @@ export default function Navbar({onGenreSelect,onSearch}) {
     }
   };
 
-
-  const handleGenreSelect = () => {
-    if(genre.trim()){
-    onGenreSelect(genre);
-    }
-  };
+  const handleRandomise=()=>{
+    onRandomise();
+  }
 
   return (
     <div className="flex bg-red-200 p-4 justify-center items-center flex-col md:flex-row">
@@ -62,6 +59,10 @@ export default function Navbar({onGenreSelect,onSearch}) {
               </option>
             ))}
           </select>
+          <button 
+          className="ml-2 bg-gray-900 text-white hover:bg-red-600 px-4 py-2 rounded"
+          onClick={handleRandomise}
+          >Randomise</button>
         </div>
       </div>
     </div>
