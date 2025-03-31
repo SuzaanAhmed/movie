@@ -62,12 +62,6 @@ export default function Navbar({onGenreSelect,onSearch}) {
               </option>
             ))}
           </select>
-          <button
-            onClick={(handleGenreSelect)}
-            className="ml-2 bg-red-500 text-white hover:bg-blue-600 px-4 py-2 rounded"
-          >
-            Get Movies
-          </button>
         </div>
       </div>
     </div>
