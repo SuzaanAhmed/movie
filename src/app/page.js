@@ -1,26 +1,35 @@
 "use client";
 import { useState } from "react";
-import { fetchMoviesByGenre } from "./apis/page";
+import { fetchMovie,fetchMoviesByGenre } from "./apis/page";
 import Navbar from "../../navbar/page";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSearch = async (query) => {
+  const handleMovieSearch = async (query) => {
     setLoading(true);
-    const moviesByGenre = await fetchMoviesByGenre(query, query);
+    const movieData = await fetchMovie(query);
+    setMovies(movieData.Response === "True" ? [movieData] : []);
+    setLoading(false);
+  };
+
+  const handleGenreSelect = async (genre) => {  
+    if (!genre) return;
+    setLoading(true);
+    const moviesByGenre = await fetchMoviesByGenre(genre);
     setMovies(moviesByGenre);
     setLoading(false);
   };
 
   return (
     <div>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onGenreSelect={handleGenreSelect} onSearch={handleMovieSearch}/>  
+      
       {loading ? (
         <p className="mt-4 text-center">Loading movies...</p>
       ) : (
-        <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="mt-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {movies.length === 0 ? (
             <p className="text-center">No movies found.</p>
           ) : (

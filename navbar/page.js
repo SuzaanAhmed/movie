@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 
-export default function Navbar({ onSearch }) {
+export default function Navbar({onGenreSelect,onSearch}) {  
+  const [genre,setGenre]=useState("")  
   const [query, setQuery] = useState("");
   const genres = ["Drama", "Action", "Romance", "Thriller", "Comedy", "Horror"];
 
@@ -11,8 +12,11 @@ export default function Navbar({ onSearch }) {
     }
   };
 
-  const handleGenreSearch = (genre) => {
-    onSearch(genre);
+
+  const handleGenreSelect = () => {
+    if(genre.trim()){
+    onGenreSelect(genre);
+    }
   };
 
   return (
@@ -26,7 +30,6 @@ export default function Navbar({ onSearch }) {
           Choose from a Plethora of Movies on RunningPictures.
         </h1>
 
-        {/* Search Bar */}
         <div className="flex mt-2 md:ml-6">
           <input
             type="text"
@@ -43,19 +46,28 @@ export default function Navbar({ onSearch }) {
           </button>
         </div>
 
-        {/* Genre Dropdown */}
         <div className="mt-2 md:mt-0 md:ml-6">
           <select
             className="border p-2 rounded bg-gray-200 cursor-pointer"
-            onChange={(e) => handleGenreSearch(e.target.value)}
+            value={genre}
+            onChange={(e) => {
+                setGenre(e.target.value);
+                onGenreSelect(e.target.value); 
+              }}
           >
             <option value="">Select Genre</option>
-            {genres.map((genre) => (
-              <option key={genre} value={genre}>
-                {genre}
+            {genres.map((g) => (
+              <option key={g} value={g}>
+                {g}
               </option>
             ))}
           </select>
+          <button
+            onClick={(handleGenreSelect)}
+            className="ml-2 bg-red-500 text-white hover:bg-blue-600 px-4 py-2 rounded"
+          >
+            Get Movies
+          </button>
         </div>
       </div>
     </div>
