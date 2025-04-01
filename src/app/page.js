@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { fetchMovie,fetchMoviesByGenre,fetchRandomMovies } from "./apis/page";
+import { fetchMovie,fetchMoviesByGenre,fetchMovies,fetchRandomMovies } from "./apis/page";
 import Navbar from "../../navbar/page";
 
 export default function Home() {
@@ -15,10 +15,11 @@ export default function Home() {
     setLoading(false);
   }
 
-  const handleMovieSearch = async (query) => {
+  const handleMovieSearch = async (query) => {  
+    if (!query) return;
     setLoading(true);
-    const movieData = await fetchMovie(query);
-    setMovies(movieData.Response === "True" ? [movieData] : []);
+    const movieData = await fetchMovies(query);
+    setMovies(movieData);
     setLoading(false);
   };
 
@@ -43,12 +44,12 @@ export default function Home() {
             <p className="text-center">No movies found.</p>
           ) : (
             movies.map((movie) => (
-              <div key={movie.imdbID} className="border p-2 rounded shadow">
-                <h3 className="text-lg font-bold">{movie.Title} ({movie.Year})</h3>
+              <a href="/movieDetails" key={movie.imdbID} className="border p-2 rounded shadow">
+                <h3 id="title" className="text-lg font-bold">{movie.Title} ({movie.Year})</h3>
                 <img src={movie.Poster} alt={movie.Title} className="w-full h-64 object-cover" />
                 <p className="text-sm"><strong>Genre:</strong> {movie.Genre}</p>
                 <p className="text-sm"><strong>IMDB:</strong> {movie.imdbRating}</p>
-              </div>
+              </a>
             ))
           )}
         </div>
