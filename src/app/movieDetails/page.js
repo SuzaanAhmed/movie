@@ -16,7 +16,6 @@ export default function MovieDetails(){
         <div>
             <Navbar onSearch={handleMovieSearch} onRandomise={randomiseSearch}/>  
             <h1>MovieDetails</h1>
-            {loading ? <p>Loading...</p> : <pre>{JSON.stringify(movies, null, 2)}</pre>}
         </div>
     );
 }
