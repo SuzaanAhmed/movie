@@ -3,26 +3,31 @@ import { useState } from "react";
 import { fetchMovie,fetchMovies,fetchRandomMovies } from "./apis/page";
 import Navbar from "../../navbar/page";
 
-export default function Home() {
-  const [movies, setMovies] = useState([]);
-  
-  const [loading, setLoading] = useState(false);
-
-  const randomiseSearch=async()=>{
-    setLoading(true);
-    const rando=await fetchRandomMovies();
-    setMovies(rando)
-    setLoading(false);
-  }
-
-  const handleMovieSearch = async (query) => {  
+export function handleMovieSearchFactory(setMovies, setLoading) {
+  return async (query) => {
     if (!query) return;
     setLoading(true);
     const movieData = await fetchMovies(query);
     setMovies(movieData);
     setLoading(false);
   };
+}
 
+export function randomiseSearchFactory(setMovies, setLoading) {
+  return async () => {
+    setLoading(true);
+    const rando = await fetchRandomMovies();
+    setMovies(rando);
+    setLoading(false);
+  };
+}
+
+export default function Home() {
+  const [movies, setMovies] = useState([]);
+  
+  const [loading, setLoading] = useState(false);
+  const handleMovieSearch=handleMovieSearchFactory(setMovies,setLoading)
+  const randomiseSearch=randomiseSearchFactory(setMovies,setLoading)
 
   return (
     <div>
