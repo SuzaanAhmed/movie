@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 
-export default function Navbar({onGenreSelect,onSearch,onRandomise}) {  
+
+export default function Navbar({onSearch,onRandomise}) {  
   const [genre,setGenre]=useState("")  
   const [query, setQuery] = useState("");
   const genres = ["Drama", "Action", "Romance", "Thriller", "Comedy", "Horror"];
@@ -49,7 +50,7 @@ export default function Navbar({onGenreSelect,onSearch,onRandomise}) {
             value={genre}
             onChange={(e) => {
                 setGenre(e.target.value);
-                onGenreSelect(e.target.value); 
+                onSearch(e.target.value); 
               }}
           >
             <option value="">Select Genre</option>
