@@ -1,5 +1,8 @@
+"use server"
+
 const API_KEY = "d8c711ea";
 const BASE_URL = "https://www.omdbapi.com/";
+
 
 export async function fetchMovie(title) {
   const response = await fetch(`${BASE_URL}?t=${title}&type=movie&apikey=${API_KEY}`);

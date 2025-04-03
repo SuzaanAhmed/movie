@@ -6,6 +6,8 @@ import Navbar from "../../../navbar/page";
 import { handleMovieSearchFactory,randomiseSearchFactory } from "../page";
 
 export default function MovieDetails(){
+  //const title=document.getElementById("title")
+
   const [movies, setMovies] = useState([]);
   
   const [loading, setLoading] = useState(false);
